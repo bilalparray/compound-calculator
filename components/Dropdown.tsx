@@ -36,7 +36,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    marginVertical: 1,
     width: "100%",
     alignSelf: "center",
     height: "auto",
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   picker: {
-    // height: 50,
     width: "100%",
     color: "black",
   },

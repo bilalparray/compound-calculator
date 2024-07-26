@@ -1,5 +1,4 @@
 import React from "react";
-import { Octicons } from "@expo/vector-icons";
 import {
   View,
   TextInput,
@@ -8,8 +7,8 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons"; // Use this for icon rendering
 import { MaterialIcons } from "@expo/vector-icons";
+
 const CustomInput = ({
   placeholder,
   error,
@@ -25,13 +24,29 @@ const CustomInput = ({
   containerStyle,
 }: any) => {
   const handleChangeText = (text: any) => {
+    // Remove '-' and Tab characters
+    text = text.replace(/[-\t]/g, "");
+
     // Format input based on type
     if (type === "percent") {
-      text = text.replace(/[^0-9]/g, ""); // Allow only numbers
-      text = text.slice(0, 3); // Limit to 3 digits (0-100%)
+      text = text.replace(/[^0-9.]/g, ""); // Allow only numbers and decimal point
+
+      // Ensure only one decimal point is present
+      const parts = text.split(".");
+      if (parts.length > 2) {
+        text = parts[0] + "." + parts.slice(1).join("");
+      }
+
+      text = text.slice(0, 5); // Limit to 3 digits plus 2 decimal points (e.g., 100.00)
       text = text ? `${text}%` : "";
     } else if (type === "number") {
-      text = text.replace(/[^0-9]/g, ""); // Allow only numbers
+      text = text.replace(/[^0-9.]/g, ""); // Allow only numbers and decimal point
+
+      // Ensure only one decimal point is present
+      const parts = text.split(".");
+      if (parts.length > 2) {
+        text = parts[0] + "." + parts.slice(1).join("");
+      }
     }
 
     onChangeText(text);
@@ -52,7 +67,8 @@ const CustomInput = ({
           />
         )}
         <TextInput
-          placeholder={placeholder}
+          placeholder={error ? error : placeholder}
+          placeholderTextColor={error ? "red" : "#aaa"}
           secureTextEntry={secureTextEntry}
           style={[styles.input, inputStyle]}
           onChangeText={handleChangeText}
@@ -61,15 +77,14 @@ const CustomInput = ({
           autoCapitalize="none"
         />
       </View>
-      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
-    width: "100%", // Ensure the container takes full width
+    marginVertical: 8,
+    width: "100%",
   },
   label: {
     marginBottom: 5,
@@ -82,9 +97,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 8,
     backgroundColor: "#fff",
-    width: "100%", // Ensure the input container takes full width
+    width: "100%",
   },
   input: {
     flex: 1,
@@ -93,11 +108,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-  },
-  error: {
-    marginTop: 5,
-    color: "red",
-    fontSize: 14,
   },
 });
 

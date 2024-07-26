@@ -2,13 +2,23 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 interface CardProps {
-  result: string;
+  interestAmount: string;
+  principalAmount: string;
+  totalAmount: Number;
 }
 
-const Card: React.FC<CardProps> = ({ result }) => {
+const Card: React.FC<CardProps> = ({
+  interestAmount,
+  principalAmount,
+  totalAmount,
+}) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.cardText}>{result || "No result available"}</Text>
+      <Text style={styles.cardText}>Principal Amount : {principalAmount}</Text>
+      <Text style={styles.cardText}>Interest Amount : {interestAmount}</Text>
+      <Text style={styles.cardText}>
+        Total Amount : {totalAmount.toString()}
+      </Text>
     </View>
   );
 };
@@ -26,9 +36,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
+    justifyContent: "center", // Center vertically
+    alignItems: "flex-start",
+    // textAlign: "center",
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 20,
     color: "#333",
   },
 });

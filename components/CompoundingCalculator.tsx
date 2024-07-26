@@ -35,23 +35,19 @@ const CompoundingCalculator = () => {
   };
 
   const handlePercentChange = (text: string) => {
-    const cleanedText = text.replace(/[^0-9.]/g, ""); // Remove any non-numeric characters except for "."
-    let value = cleanedText;
+    let cleanedText = text.replace(/[^0-9.]/g, "");
 
-    // Ensure only one decimal point is present
-    if (value.includes(".")) {
-      const parts = value.split(".");
-      value = parts[0] + "." + parts.slice(1).join("");
+    const parts = cleanedText.split(".");
+    if (parts.length > 2) {
+      cleanedText = parts[0] + "." + parts.slice(1).join("");
     }
 
-    const numericValue = parseFloat(value);
-
-    // Ensure value is within 0-100 range
-    if (numericValue > 100) {
-      value = "100";
+    let numericValue = parseFloat(cleanedText);
+    if (!isNaN(numericValue) && numericValue > 100) {
+      cleanedText = "100";
     }
 
-    setPercent(value);
+    setPercent(cleanedText);
     setPercentError("");
   };
 
@@ -66,9 +62,7 @@ const CompoundingCalculator = () => {
   const validateFields = () => {
     let valid = true;
     if (principalAmount === "" || isNaN(Number(principalAmount))) {
-      setNumberError(
-        "Principal amount is required and should be a valid number"
-      );
+      setNumberError("Please Enter a Valid Amount!");
       valid = false;
     }
     if (
@@ -77,13 +71,11 @@ const CompoundingCalculator = () => {
       Number(percent) < 0 ||
       Number(percent) > 100
     ) {
-      setPercentError(
-        "Rate of interest is required and should be a valid percent between 0 and 100"
-      );
+      setPercentError("Please Enter a Valid Percentage!");
       valid = false;
     }
     if (time === "" || isNaN(Number(time))) {
-      setTimeError("Time is required and should be a valid number");
+      setTimeError("Please Enter a Valid Time!");
       valid = false;
     }
     return valid;
@@ -98,7 +90,7 @@ const CompoundingCalculator = () => {
     setPercentError("");
     setSelectedFrequency(Frequency.Annually);
     setSelectedTime(TimePeriod.Years);
-    setResult(""); // Clear the result when inputs are cleared
+    setResult("");
   };
 
   const handleButtonClick = () => {
@@ -111,7 +103,7 @@ const CompoundingCalculator = () => {
         selectedFrequency,
         selectedTime
       );
-      setResult(`The calculated compound interest is ${dataFromCInpm}`);
+      setResult(dataFromCInpm.toFixed(3));
     }
   };
 
@@ -150,7 +142,7 @@ const CompoundingCalculator = () => {
         <CustomInput
           label="Enter Rate of Interest"
           placeholder="Enter Rate of Interest"
-          type="percent"
+          type="number"
           icon="percent"
           value={percent}
           onChangeText={handlePercentChange}
@@ -178,10 +170,14 @@ const CompoundingCalculator = () => {
           items={timeItems}
         />
         <View style={styles.buttonContainer}>
-          <MyButton onPress={handleButtonClick} text="Calculate" />
           <MyButton onPress={clearInputFields} text="Clear" />
+          <MyButton onPress={handleButtonClick} text="Calculate" />
         </View>
-        <Card result={result} />
+        <Card
+          totalAmount={Number(principalAmount) + Number(result)}
+          principalAmount={principalAmount}
+          interestAmount={result}
+        />
       </View>
     </SafeAreaView>
   );
@@ -207,7 +203,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginVertical: 10,
+    marginVertical: 8,
     width: "100%",
   },
 });
