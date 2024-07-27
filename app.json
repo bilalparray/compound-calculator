@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "Compounding Calculator",
-    "slug": "Compounding Interest Calculator",
+    "slug": "compound-calculator",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "Compounding Calculator",
+    "scheme": "compoundingcalculator",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
