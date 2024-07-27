@@ -1,6 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
 import MyButton from "./Button";
@@ -127,7 +126,6 @@ const CompoundingCalculator = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" backgroundColor="black" />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Compounding Calculator</Text>
         <CustomInput
