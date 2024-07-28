@@ -1,5 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useRef, useState } from "react";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
 import MyButton from "./Button";
@@ -9,8 +16,21 @@ import {
   Frequency,
   TimePeriod,
 } from "unit-conversion-kit";
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+  useForeground,
+} from "react-native-google-mobile-ads";
+const adUnitId = __DEV__
+  ? TestIds.ADAPTIVE_BANNER
+  : "ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy";
 
 const CompoundingCalculator = () => {
+  const bannerRef = useRef<BannerAd>(null);
+  useForeground(() => {
+    Platform.OS === "ios" && bannerRef.current?.load();
+  });
   const [principalAmount, setPrincipalAmount] = useState("");
   const [time, setTime] = useState("");
   const [percent, setPercent] = useState("");
@@ -125,59 +145,66 @@ const CompoundingCalculator = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Compounding Calculator</Text>
-        <CustomInput
-          label="Enter Principal Amount"
-          placeholder="Enter Principal Amount"
-          type="number"
-          icon="numbers"
-          value={principalAmount}
-          onChangeText={handlePrincipalAmount}
-          error={numberError}
-        />
-        <CustomInput
-          label="Enter Rate of Interest"
-          placeholder="Enter Rate of Interest"
-          type="number"
-          icon="percent"
-          value={percent}
-          onChangeText={handlePercentChange}
-          error={percentError}
-        />
-        <Dropdown
-          label="Choose Compounding Frequency"
-          selectedValue={selectedFrequency}
-          onValueChange={handleCompoundingFrequencyChange}
-          items={compoundingFrequencyItems}
-        />
-        <CustomInput
-          label="Enter Time"
-          placeholder="Enter Time"
-          type="number"
-          icon="numbers"
-          value={time}
-          onChangeText={handleTime}
-          error={timeError}
-        />
-        <Dropdown
-          label="Choose Time Unit"
-          selectedValue={selectedTime}
-          onValueChange={handleTimeChange}
-          items={timeItems}
-        />
-        <View style={styles.buttonContainer}>
-          <MyButton onPress={clearInputFields} text="Clear" />
-          <MyButton onPress={handleButtonClick} text="Calculate" />
+    <ScrollView>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Compounding Calculator</Text>
+          <CustomInput
+            label="Enter Principal Amount"
+            placeholder="Enter Principal Amount"
+            type="number"
+            icon="numbers"
+            value={principalAmount}
+            onChangeText={handlePrincipalAmount}
+            error={numberError}
+          />
+          <CustomInput
+            label="Enter Rate of Interest"
+            placeholder="Enter Rate of Interest"
+            type="number"
+            icon="percent"
+            value={percent}
+            onChangeText={handlePercentChange}
+            error={percentError}
+          />
+          <Dropdown
+            label="Choose Compounding Frequency"
+            selectedValue={selectedFrequency}
+            onValueChange={handleCompoundingFrequencyChange}
+            items={compoundingFrequencyItems}
+          />
+          <CustomInput
+            label="Enter Time"
+            placeholder="Enter Time"
+            type="number"
+            icon="numbers"
+            value={time}
+            onChangeText={handleTime}
+            error={timeError}
+          />
+          <Dropdown
+            label="Choose Time Unit"
+            selectedValue={selectedTime}
+            onValueChange={handleTimeChange}
+            items={timeItems}
+          />
+          <View style={styles.buttonContainer}>
+            <MyButton onPress={clearInputFields} text="Clear" />
+            <MyButton onPress={handleButtonClick} text="Calculate" />
+          </View>
+          <Card
+            totalAmount={Number(principalAmount) + Number(result)}
+            principalAmount={principalAmount}
+            interestAmount={result}
+          />
         </View>
-        <Card
-          totalAmount={Number(principalAmount) + Number(result)}
-          principalAmount={principalAmount}
-          interestAmount={result}
+        <BannerAd
+          ref={bannerRef}
+          unitId={TestIds.BANNER}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         />
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
