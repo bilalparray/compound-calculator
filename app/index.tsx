@@ -24,7 +24,7 @@ import {
 } from "react-native-google-mobile-ads";
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
-  : "ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy";
+  : "ca-app-pub-3821692834936093/3250384525";
 
 const CompoundingCalculator = () => {
   const bannerRef = useRef<BannerAd>(null);
@@ -200,7 +200,7 @@ const CompoundingCalculator = () => {
         </View>
         <BannerAd
           ref={bannerRef}
-          unitId={TestIds.BANNER}
+          unitId={adUnitId}
           size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         />
       </SafeAreaView>
