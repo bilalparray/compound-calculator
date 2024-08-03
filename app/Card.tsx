@@ -12,15 +12,22 @@ const Card: React.FC<CardProps> = ({
   principalAmount,
   totalAmount,
 }) => {
-  return (
+  // Check if interestAmount is valid
+  const showCard = interestAmount !== "" && Number(interestAmount) !== 0;
+
+  return showCard ? (
     <View style={styles.card}>
-      <Text style={styles.cardText}>Principal Amount : {principalAmount}</Text>
-      <Text style={styles.cardText}>Interest Amount : {interestAmount}</Text>
       <Text style={styles.cardText}>
-        Total Amount : {totalAmount.toString()}
+        Principal Amount : {Number(principalAmount).toFixed(2)}
+      </Text>
+      <Text style={styles.cardText}>
+        Interest Amount : {Number(interestAmount).toFixed(2)}
+      </Text>
+      <Text style={styles.cardText}>
+        Total Amount : {totalAmount.toFixed(2)}
       </Text>
     </View>
-  );
+  ) : null; // Render null if interestAmount is empty or zero
 };
 
 const styles = StyleSheet.create({
@@ -38,7 +45,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     justifyContent: "center", // Center vertically
     alignItems: "flex-start",
-    // textAlign: "center",
   },
   cardText: {
     fontSize: 20,

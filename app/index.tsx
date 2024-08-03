@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions, // Import Dimensions from react-native
+  Dimensions,
 } from "react-native";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
@@ -157,7 +157,6 @@ const CompoundingCalculator = () => {
     <ScrollView>
       <SafeAreaView style={styles.safeArea}>
         <View style={[styles.titleContainer, { height: windowHeight }]}>
-          {/* Adjusted to use windowHeight */}
           <Text style={styles.title}>Compounding Calculator</Text>
           <CustomInput
             label="Enter Principal Amount"
@@ -202,10 +201,18 @@ const CompoundingCalculator = () => {
             <MyButton onPress={clearInputFields} text="Clear" />
             <MyButton onPress={handleButtonClick} text="Calculate" />
           </View>
-          <Card
-            totalAmount={Number(principalAmount) + Number(result)}
-            principalAmount={principalAmount}
-            interestAmount={result}
+          {/* Conditional rendering of Card */}
+          {result !== "" && (
+            <Card
+              totalAmount={Number(principalAmount) + Number(result)}
+              principalAmount={principalAmount}
+              interestAmount={result}
+            />
+          )}
+          <BannerAd
+            ref={bannerRef}
+            unitId={adUnitId}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
           />
           <BannerAd
             ref={bannerRef}
