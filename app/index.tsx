@@ -1,3 +1,4 @@
+import React, { useRef, useState, useEffect } from "react";
 import {
   Platform,
   SafeAreaView,
@@ -5,8 +6,8 @@ import {
   StyleSheet,
   Text,
   View,
+  Dimensions, // Import Dimensions from react-native
 } from "react-native";
-import React, { useRef, useState } from "react";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
 import MyButton from "./Button";
@@ -22,9 +23,10 @@ import {
   TestIds,
   useForeground,
 } from "react-native-google-mobile-ads";
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : "ca-app-pub-3821692834936093/3250384525";
+const adUnitId = "ca-app-pub-3821692834936093/3250384525";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const CompoundingCalculator = () => {
   const bannerRef = useRef<BannerAd>(null);
@@ -42,6 +44,13 @@ const CompoundingCalculator = () => {
   );
   const [selectedTime, setSelectedTime] = useState(TimePeriod.Years);
   const [result, setResult] = useState("");
+
+  useEffect(() => {
+    // Load the banner ad when the component mounts
+    if (bannerRef.current) {
+      bannerRef.current.load();
+    }
+  }, []);
 
   const handlePrincipalAmount = (text: string) => {
     setPrincipalAmount(text);
@@ -147,7 +156,8 @@ const CompoundingCalculator = () => {
   return (
     <ScrollView>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.titleContainer}>
+        <View style={[styles.titleContainer, { height: windowHeight }]}>
+          {/* Adjusted to use windowHeight */}
           <Text style={styles.title}>Compounding Calculator</Text>
           <CustomInput
             label="Enter Principal Amount"
@@ -197,12 +207,12 @@ const CompoundingCalculator = () => {
             principalAmount={principalAmount}
             interestAmount={result}
           />
+          <BannerAd
+            ref={bannerRef}
+            unitId={adUnitId}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          />
         </View>
-        <BannerAd
-          ref={bannerRef}
-          unitId={adUnitId}
-          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        />
       </SafeAreaView>
     </ScrollView>
   );
@@ -219,6 +229,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "black",
     paddingVertical: 15,
+    minHeight: 100,
   },
   title: {
     color: "white",
