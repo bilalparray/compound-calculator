@@ -8,7 +8,6 @@ import {
   View,
   Dimensions,
   BackHandler,
-  Alert,
 } from "react-native";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
@@ -22,11 +21,11 @@ import {
 import {
   BannerAd,
   BannerAdSize,
-  TestIds,
   useForeground,
 } from "react-native-google-mobile-ads";
 import Modal from "react-native-modal";
 import { environment } from "@/environment";
+import { StatusBar } from "expo-status-bar";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -256,6 +255,7 @@ const CompoundingCalculator = () => {
               unitId={environment.adUnitId}
               size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
             />
+            <StatusBar style="auto" />
           </View>
         </SafeAreaView>
       </ScrollView>
