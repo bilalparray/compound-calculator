@@ -24,6 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           selectedValue={selectedValue}
           style={styles.picker}
           onValueChange={onValueChange}
+          dropdownIconColor="white"
         >
           {items.map((item, index) => (
             <Picker.Item key={index} label={item.label} value={item.value} />
@@ -41,22 +42,25 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     padding: 0,
+    backgroundColor: "black",
   },
   label: {
     fontSize: 16,
-    color: "#fff",
+    color: "white",
     marginBottom: 5,
   },
   pickerContainer: {
     borderWidth: 1,
     borderColor: "#fff",
     borderRadius: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     padding: 0,
+    color: "white",
   },
   picker: {
     width: "100%",
-    color: "black",
+    color: "white",
+    backgroundColor: "black",
   },
 });
 

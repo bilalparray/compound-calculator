@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-} from "react-native";
+import { View, TextInput, Text, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const CustomInput = ({
@@ -62,7 +55,7 @@ const CustomInput = ({
           <MaterialIcons
             name={icon}
             size={20}
-            color={icon.color || "#000"}
+            color={icon.color || "white"}
             style={styles.icon}
           />
         )}
@@ -98,13 +91,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
     width: "100%",
+    color: "white",
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: "#000",
+    color: "white",
+    backgroundColor: "black",
   },
   icon: {
     marginRight: 10,

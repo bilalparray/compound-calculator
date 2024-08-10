@@ -180,7 +180,7 @@ const CompoundingCalculator = () => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <SafeAreaView style={styles.safeArea}>
           <View style={[styles.titleContainer, { height: windowHeight }]}>
             <BannerAd
@@ -229,8 +229,18 @@ const CompoundingCalculator = () => {
               items={timeItems}
             />
             <View style={styles.buttonContainer}>
-              <MyButton onPress={clearInputFields} text="Clear" />
-              <MyButton onPress={handleButtonClick} text="Calculate" />
+              <MyButton
+                onPress={clearInputFields}
+                text="Clear"
+                backGround="blue"
+                color="white"
+              />
+              <MyButton
+                onPress={handleButtonClick}
+                text="Calculate"
+                backGround="green"
+                color="white"
+              />
             </View>
             {/* Conditional rendering of Card */}
             {result !== "" && (
@@ -240,6 +250,7 @@ const CompoundingCalculator = () => {
                 interestAmount={result}
               />
             )}
+
             <BannerAd
               ref={bannerRef}
               unitId={environment.adUnitId}
@@ -259,8 +270,18 @@ const CompoundingCalculator = () => {
           />
           <Text style={styles.modalText}>Are you sure you want to exit?</Text>
           <View style={styles.modalButtons}>
-            <MyButton onPress={toggleModal} text="Cancel" />
-            <MyButton onPress={exitApp} text="OK" />
+            <MyButton
+              onPress={toggleModal}
+              text="Cancel"
+              backGround="green"
+              color="white"
+            />
+            <MyButton
+              onPress={exitApp}
+              text="OK"
+              backGround="red"
+              color="white"
+            />
           </View>
         </View>
       </Modal>
@@ -274,11 +295,16 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
   titleContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "black",
-    paddingVertical: 15,
+    paddingVertical: 10,
     minHeight: 100,
   },
   title: {
@@ -289,7 +315,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginVertical: 8,
+    marginVertical: 4,
     width: "100%",
   },
   modal: {
