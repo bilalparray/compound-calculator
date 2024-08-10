@@ -20,8 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-
-      "package": "com.bilalparray07.compoundingcalculator"
+      "package": "com.bilalparray07.compoundingcalculator",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
@@ -49,7 +49,6 @@
         "projectId": "8c3b6cb1-d61a-433d-b62b-2bac2b77ecde"
       }
     },
-
     "react-native-google-mobile-ads": {
       "androidAppId": "ca-app-pub-3821692834936093~7004860921"
     }
