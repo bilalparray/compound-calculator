@@ -70,11 +70,13 @@ const CompoundingCalculator = () => {
   const handlePrincipalAmount = (text: string) => {
     setPrincipalAmount(text);
     setNumberError("");
+    setResult("");
   };
 
   const handleTime = (text: string) => {
     setTime(text);
     setTimeError("");
+    setResult("");
   };
 
   const handlePercentChange = (text: string) => {
@@ -92,14 +94,17 @@ const CompoundingCalculator = () => {
 
     setPercent(cleanedText);
     setPercentError("");
+    setResult("");
   };
 
   const handleCompoundingFrequencyChange = (value: any) => {
     setSelectedFrequency(value);
+    setResult("");
   };
 
   const handleTimeChange = (value: TimePeriod) => {
     setSelectedTime(value);
+    setResult("");
   };
 
   const validateFields = () => {
@@ -173,6 +178,7 @@ const CompoundingCalculator = () => {
   };
 
   const exitApp = () => {
+    clearInputFields();
     BackHandler.exitApp();
     toggleModal();
   };
