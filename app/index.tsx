@@ -161,11 +161,11 @@ const CompoundingCalculator = () => {
 
   const timeItems = [
     { label: "Year", value: TimePeriod.Years },
-    { label: "Semi-Annually", value: TimePeriod.SemiAnnually },
-    { label: "Quarterly", value: TimePeriod.Quarters },
-    { label: "Monthly", value: TimePeriod.Months },
-    { label: "Weekly", value: TimePeriod.Weeks },
-    { label: "Daily", value: TimePeriod.Days },
+    { label: "Semi-Annual", value: TimePeriod.SemiAnnually },
+    { label: "Quarters", value: TimePeriod.Quarters },
+    { label: "Months", value: TimePeriod.Months },
+    { label: "Weeks", value: TimePeriod.Weeks },
+    { label: "Days", value: TimePeriod.Days },
   ];
 
   const toggleModal = () => {
