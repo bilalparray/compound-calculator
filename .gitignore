@@ -10,7 +10,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-
+npx expo run:android --variant release for apk
+ npx react-native build-android --mode=release   for aab file
 # macOS
 .DS_Store
 

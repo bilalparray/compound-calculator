@@ -188,8 +188,9 @@ const CompoundingCalculator = () => {
 
   const exitApp = () => {
     clearInputFields();
-    BackHandler.exitApp();
     toggleModal();
+    handleClosePress();
+    BackHandler.exitApp();
   };
   const snapPoints = useMemo(() => ["25%", "50%", "70%", "90%"], []);
 
@@ -274,14 +275,6 @@ const CompoundingCalculator = () => {
                 color="white"
               />
             </View>
-            {/* Conditional rendering of Card
-            {result !== "" && (
-              <Card
-                totalAmount={Number(principalAmount) + Number(result)}
-                principalAmount={principalAmount}
-                interestAmount={result}
-              />
-            )} */}
 
             <BannerAd
               ref={bannerRef}
@@ -296,7 +289,7 @@ const CompoundingCalculator = () => {
             snapPoints={snapPoints}
             enablePanDownToClose={true}
             handleIndicatorStyle={{ backgroundColor: "#fff" }}
-            backgroundStyle={{ backgroundColor: "#1d0f4e" }}
+            backgroundStyle={{ backgroundColor: "#2c1387" }}
             backdropComponent={renderBackdrop}
           >
             <View style={styles.contentContainer}>
@@ -426,14 +419,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     padding: 20,
-
-    backgroundColor: "#1d0f4e", // Light background color for contrast
+    backgroundColor: "#2c1387",
   },
   resultTitle: {
     paddingTop: 10,
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff", // Darker text color for the title
+    color: "#fff",
     marginBottom: 0,
   },
   resultItem: {
