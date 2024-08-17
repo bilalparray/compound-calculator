@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
     backgroundColor: "black",
+    height: 40,
   },
   icon: {
     marginRight: 10,
