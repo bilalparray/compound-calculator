@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "auto",
     padding: 0,
-    backgroundColor: "black",
+    backgroundColor: "#1d0f4e",
   },
   label: {
     fontSize: 16,

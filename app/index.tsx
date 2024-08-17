@@ -1,4 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import {
   Platform,
   SafeAreaView,
@@ -8,11 +15,11 @@ import {
   View,
   Dimensions,
   BackHandler,
+  Button,
 } from "react-native";
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
 import MyButton from "./Button";
-import Card from "./Card";
 import {
   calculateCompoundInterest,
   Frequency,
@@ -26,6 +33,7 @@ import {
 import Modal from "react-native-modal";
 import { environment } from "@/environment";
 import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -152,6 +160,7 @@ const CompoundingCalculator = () => {
         selectedTime
       );
       setResult(dataFromCInpm.toFixed(3));
+      handleOpenPress();
     }
   };
 
@@ -182,9 +191,27 @@ const CompoundingCalculator = () => {
     BackHandler.exitApp();
     toggleModal();
   };
+  const snapPoints = useMemo(() => ["25%", "50%", "70%", "90%"], []);
 
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const handleClosePress = () => bottomSheetRef.current?.close();
+  const handleOpenPress = () => bottomSheetRef.current?.expand();
+  // const handleCollapsePress = () => bottomSheetRef.current?.collapse();
+  // const snapeToIndex = (index: number) =>
+  //   bottomSheetRef.current?.snapToIndex(index);
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+      />
+    ),
+    []
+  );
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <SafeAreaView style={styles.safeArea}>
           <View style={[styles.titleContainer, { height: windowHeight }]}>
@@ -247,14 +274,14 @@ const CompoundingCalculator = () => {
                 color="white"
               />
             </View>
-            {/* Conditional rendering of Card */}
+            {/* Conditional rendering of Card
             {result !== "" && (
               <Card
                 totalAmount={Number(principalAmount) + Number(result)}
                 principalAmount={principalAmount}
                 interestAmount={result}
               />
-            )}
+            )} */}
 
             <BannerAd
               ref={bannerRef}
@@ -263,35 +290,80 @@ const CompoundingCalculator = () => {
             />
             <StatusBar style="auto" />
           </View>
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={-1}
+            snapPoints={snapPoints}
+            enablePanDownToClose={true}
+            handleIndicatorStyle={{ backgroundColor: "#fff" }}
+            backgroundStyle={{ backgroundColor: "#1d0f4e" }}
+            backdropComponent={renderBackdrop}
+          >
+            <View style={styles.contentContainer}>
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
+              <Text style={styles.resultTitle}>Calculation Results</Text>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Principal Amount:</Text>
+                <Text style={styles.resultValue}>{principalAmount}</Text>
+              </View>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Interest Amount:</Text>
+                <Text style={styles.resultValue}>{result}</Text>
+              </View>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Total Amount:</Text>
+                <Text style={styles.resultValue}>
+                  {Number(principalAmount) + Number(result)}
+                </Text>
+              </View>
+              <MyButton
+                text="Close"
+                backGround="green"
+                color="white"
+                onPress={handleClosePress}
+              />
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
+            </View>
+          </BottomSheet>
+
+          {/* Custom Modal for Exit Confirmation */}
+          <Modal isVisible={isModalVisible} style={styles.modal}>
+            <View style={styles.modalContent}>
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
+              <Text style={styles.modalText}>
+                Are you sure you want to exit?
+              </Text>
+              <View style={styles.modalButtons}>
+                <MyButton
+                  onPress={toggleModal}
+                  text="Cancel"
+                  backGround="green"
+                  color="white"
+                />
+                <MyButton
+                  onPress={exitApp}
+                  text="OK"
+                  backGround="red"
+                  color="white"
+                />
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
       </ScrollView>
-
-      {/* Custom Modal for Exit Confirmation */}
-      <Modal isVisible={isModalVisible} style={styles.modal}>
-        <View style={styles.modalContent}>
-          <BannerAd
-            ref={bannerRef}
-            unitId={environment.adUnitId}
-            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-          />
-          <Text style={styles.modalText}>Are you sure you want to exit?</Text>
-          <View style={styles.modalButtons}>
-            <MyButton
-              onPress={toggleModal}
-              text="Cancel"
-              backGround="green"
-              color="white"
-            />
-            <MyButton
-              onPress={exitApp}
-              text="OK"
-              backGround="red"
-              color="white"
-            />
-          </View>
-        </View>
-      </Modal>
-    </>
+    </GestureHandlerRootView>
   );
 };
 
@@ -309,10 +381,12 @@ const styles = StyleSheet.create({
   titleContainer: {
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "black",
+    backgroundColor: "#1d0f4e",
     minHeight: 100,
   },
+
   title: {
+    paddingVertical: 10,
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
@@ -345,5 +419,44 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
+  },
+
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 20,
+
+    backgroundColor: "#1d0f4e", // Light background color for contrast
+  },
+  resultTitle: {
+    paddingTop: 10,
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff", // Darker text color for the title
+    marginBottom: 0,
+  },
+  resultItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginVertical: 10,
+    padding: 10,
+    backgroundColor: "#fff", // White background for individual result items
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5, // Elevation for a subtle shadow effect on Android
+  },
+  resultLabel: {
+    fontSize: 18,
+    color: "#666", // Medium-dark color for the label
+  },
+  resultValue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#000", // Darker color for the result value
   },
 });
