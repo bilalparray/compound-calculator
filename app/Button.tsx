@@ -29,13 +29,15 @@ export default MyButton;
 const styles = StyleSheet.create({
   button: {
     padding: 10,
+    paddingHorizontal: 15,
     borderRadius: 5,
     alignItems: "center",
     marginVertical: 10,
-    width: 100,
+    width: "auto",
+    minWidth: 100,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

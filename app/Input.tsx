@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5,
-    fontSize: 16,
+    fontSize: 18,
     color: "white",
   },
   inputContainer: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     color: "white",
     backgroundColor: "black",
   },

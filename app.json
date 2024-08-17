@@ -2,7 +2,7 @@
   "expo": {
     "name": "Compounding Calculator",
     "slug": "compound-calculator",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "compoundingcalculator",
@@ -21,7 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.bilalparray07.compoundingcalculator",
-      "versionCode": 2
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",

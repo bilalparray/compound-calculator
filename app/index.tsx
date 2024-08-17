@@ -196,7 +196,7 @@ const CompoundingCalculator = () => {
             <Text style={styles.title}>Compounding Calculator</Text>
             <CustomInput
               label="Enter Principal Amount"
-              placeholder="Enter Principal Amount"
+              placeholder="Please Enter Principal Amount here."
               type="number"
               icon="numbers"
               value={principalAmount}
@@ -205,7 +205,7 @@ const CompoundingCalculator = () => {
             />
             <CustomInput
               label="Enter Rate of Interest"
-              placeholder="Enter Rate of Interest"
+              placeholder="Please Enter Rate of Interest here."
               type="number"
               icon="percent"
               value={percent}
@@ -220,7 +220,7 @@ const CompoundingCalculator = () => {
             />
             <CustomInput
               label="Enter Time"
-              placeholder="Enter Time"
+              placeholder="Please Enter Time Here"
               type="number"
               icon="numbers"
               value={time}
@@ -310,7 +310,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "black",
-    paddingVertical: 10,
     minHeight: 100,
   },
   title: {
@@ -320,9 +319,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 4,
-    width: "100%",
+    justifyContent: "space-between",
+    marginVertical: 3,
+    width: "90%",
   },
   modal: {
     justifyContent: "center",
