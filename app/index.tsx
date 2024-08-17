@@ -333,7 +333,7 @@ const CompoundingCalculator = () => {
               <BannerAd
                 ref={bannerRef}
                 unitId={environment.adUnitId}
-                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                size={BannerAdSize.BANNER}
               />
               <Text style={styles.modalText}>
                 Are you sure you want to exit?
