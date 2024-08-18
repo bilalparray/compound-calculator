@@ -5,7 +5,10 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 import {
   Platform,
   SafeAreaView,
@@ -198,9 +201,6 @@ const CompoundingCalculator = () => {
 
   const handleClosePress = () => bottomSheetRef.current?.close();
   const handleOpenPress = () => bottomSheetRef.current?.expand();
-  // const handleCollapsePress = () => bottomSheetRef.current?.collapse();
-  // const snapeToIndex = (index: number) =>
-  //   bottomSheetRef.current?.snapToIndex(index);
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop
@@ -299,27 +299,29 @@ const CompoundingCalculator = () => {
               unitId={environment.adUnitId}
               size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
             />
-            <Text style={styles.resultTitle}>Calculation Results</Text>
-            <View style={styles.resultItem}>
-              <Text style={styles.resultLabel}>Principal Amount:</Text>
-              <Text style={styles.resultValue}>{principalAmount}</Text>
-            </View>
-            <View style={styles.resultItem}>
-              <Text style={styles.resultLabel}>Interest Amount:</Text>
-              <Text style={styles.resultValue}>{result}</Text>
-            </View>
-            <View style={styles.resultItem}>
-              <Text style={styles.resultLabel}>Total Amount:</Text>
-              <Text style={styles.resultValue}>
-                {Number(principalAmount) + Number(result)}
-              </Text>
-            </View>
-            <MyButton
-              text="Close"
-              backGround="green"
-              color="white"
-              onPress={handleClosePress}
-            />
+            <BottomSheetScrollView>
+              <Text style={styles.resultTitle}>Calculation Results</Text>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Principal Amount:</Text>
+                <Text style={styles.resultValue}>{principalAmount}</Text>
+              </View>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Interest Amount:</Text>
+                <Text style={styles.resultValue}>{result}</Text>
+              </View>
+              <View style={styles.resultItem}>
+                <Text style={styles.resultLabel}>Total Amount:</Text>
+                <Text style={styles.resultValue}>
+                  {Number(principalAmount) + Number(result)}
+                </Text>
+              </View>
+              <MyButton
+                text="Close"
+                backGround="green"
+                color="white"
+                onPress={handleClosePress}
+              />
+            </BottomSheetScrollView>
             <BannerAd
               ref={bannerRef}
               unitId={environment.adUnitId}
@@ -432,21 +434,24 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
     padding: 10,
-    backgroundColor: "#fff", // White background for individual result items
+    backgroundColor: "#fff",
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5, // Elevation for a subtle shadow effect on Android
+    elevation: 5,
   },
   resultLabel: {
     fontSize: 18,
-    color: "#666", // Medium-dark color for the label
+    color: "#666",
+    flex: 3,
   },
   resultValue: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#000", // Darker color for the result value
+    color: "#000",
+    flex: 2,
+    flexWrap: "wrap",
   },
 });
