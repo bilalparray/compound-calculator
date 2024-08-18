@@ -18,8 +18,8 @@ import {
   View,
   Dimensions,
   BackHandler,
-  Button,
 } from "react-native";
+
 import CustomInput from "./Input";
 import Dropdown from "./Dropdown";
 import MyButton from "./Button";
@@ -37,6 +37,8 @@ import Modal from "react-native-modal";
 import { environment } from "@/environment";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+import CopyableText from "./CopyToClipBoard";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -195,6 +197,8 @@ const CompoundingCalculator = () => {
     handleClosePress();
     BackHandler.exitApp();
   };
+  const [isCopied, setIsCopied] = useState(false);
+
   const snapPoints = useMemo(() => ["25%", "50%", "70%", "90%"], []);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -303,14 +307,34 @@ const CompoundingCalculator = () => {
               <Text style={styles.resultTitle}>Calculation Results</Text>
               <View style={styles.resultItem}>
                 <Text style={styles.resultLabel}>Principal Amount:</Text>
-                <Text style={styles.resultValue}>{principalAmount}</Text>
+
+                <Text style={styles.resultValue}>
+                  <CopyableText
+                    text={principalAmount}
+                    textStyle={styles.resultValue}
+                    iconColor="blue"
+                  />
+                  {principalAmount}
+                </Text>
               </View>
               <View style={styles.resultItem}>
                 <Text style={styles.resultLabel}>Interest Amount:</Text>
-                <Text style={styles.resultValue}>{result}</Text>
+                <Text style={styles.resultValue}>
+                  <CopyableText
+                    text={result}
+                    textStyle={styles.resultValue}
+                    iconColor="blue"
+                  />
+                  {result}
+                </Text>
               </View>
               <View style={styles.resultItem}>
                 <Text style={styles.resultLabel}>Total Amount:</Text>
+                <CopyableText
+                  text={String(Number(principalAmount) + Number(result))}
+                  textStyle={styles.resultValue}
+                  iconColor="blue"
+                />
                 <Text style={styles.resultValue}>
                   {Number(principalAmount) + Number(result)}
                 </Text>
@@ -417,7 +441,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
     padding: 20,
     backgroundColor: "#2c1387",
   },
@@ -427,6 +450,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     marginBottom: 0,
+    textAlign: "center",
+    paddingVertical: 10,
   },
   resultItem: {
     flexDirection: "row",
