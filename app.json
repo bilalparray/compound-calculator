@@ -21,7 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.bilalparray07.compoundingcalculator",
-      "versionCode": 1
+      "versionCode": 4
     },
     "web": {
       "bundler": "metro",

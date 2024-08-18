@@ -213,9 +213,9 @@ const CompoundingCalculator = () => {
   );
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-        <SafeAreaView style={styles.safeArea}>
-          <View style={[styles.titleContainer, { height: windowHeight }]}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={[styles.titleContainer, { height: windowHeight }]}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <BannerAd
               ref={bannerRef}
               unitId={environment.adUnitId}
@@ -281,81 +281,79 @@ const CompoundingCalculator = () => {
               unitId={environment.adUnitId}
               size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
             />
-            <StatusBar style="auto" />
+          </ScrollView>
+          <StatusBar style="auto" />
+        </View>
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={-1}
+          snapPoints={snapPoints}
+          enablePanDownToClose={true}
+          handleIndicatorStyle={{ backgroundColor: "#fff" }}
+          backgroundStyle={{ backgroundColor: "#2c1387" }}
+          backdropComponent={renderBackdrop}
+        >
+          <View style={styles.contentContainer}>
+            <BannerAd
+              ref={bannerRef}
+              unitId={environment.adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            />
+            <Text style={styles.resultTitle}>Calculation Results</Text>
+            <View style={styles.resultItem}>
+              <Text style={styles.resultLabel}>Principal Amount:</Text>
+              <Text style={styles.resultValue}>{principalAmount}</Text>
+            </View>
+            <View style={styles.resultItem}>
+              <Text style={styles.resultLabel}>Interest Amount:</Text>
+              <Text style={styles.resultValue}>{result}</Text>
+            </View>
+            <View style={styles.resultItem}>
+              <Text style={styles.resultLabel}>Total Amount:</Text>
+              <Text style={styles.resultValue}>
+                {Number(principalAmount) + Number(result)}
+              </Text>
+            </View>
+            <MyButton
+              text="Close"
+              backGround="green"
+              color="white"
+              onPress={handleClosePress}
+            />
+            <BannerAd
+              ref={bannerRef}
+              unitId={environment.adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            />
           </View>
-          <BottomSheet
-            ref={bottomSheetRef}
-            index={-1}
-            snapPoints={snapPoints}
-            enablePanDownToClose={true}
-            handleIndicatorStyle={{ backgroundColor: "#fff" }}
-            backgroundStyle={{ backgroundColor: "#2c1387" }}
-            backdropComponent={renderBackdrop}
-          >
-            <View style={styles.contentContainer}>
-              <BannerAd
-                ref={bannerRef}
-                unitId={environment.adUnitId}
-                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-              />
-              <Text style={styles.resultTitle}>Calculation Results</Text>
-              <View style={styles.resultItem}>
-                <Text style={styles.resultLabel}>Principal Amount:</Text>
-                <Text style={styles.resultValue}>{principalAmount}</Text>
-              </View>
-              <View style={styles.resultItem}>
-                <Text style={styles.resultLabel}>Interest Amount:</Text>
-                <Text style={styles.resultValue}>{result}</Text>
-              </View>
-              <View style={styles.resultItem}>
-                <Text style={styles.resultLabel}>Total Amount:</Text>
-                <Text style={styles.resultValue}>
-                  {Number(principalAmount) + Number(result)}
-                </Text>
-              </View>
+        </BottomSheet>
+
+        {/* Custom Modal for Exit Confirmation */}
+        <Modal isVisible={isModalVisible} style={styles.modal}>
+          <View style={styles.modalContent}>
+            <BannerAd
+              ref={bannerRef}
+              unitId={environment.adUnitId}
+              size={BannerAdSize.BANNER}
+            />
+            <Text style={styles.modalText}>Are you sure you want to exit?</Text>
+            <View style={styles.modalButtons}>
               <MyButton
-                text="Close"
+                onPress={toggleModal}
+                text="Cancel"
                 backGround="green"
                 color="white"
-                onPress={handleClosePress}
               />
-              <BannerAd
-                ref={bannerRef}
-                unitId={environment.adUnitId}
-                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              <MyButton
+                onPress={exitApp}
+                text="OK"
+                backGround="red"
+                color="white"
               />
             </View>
-          </BottomSheet>
-
-          {/* Custom Modal for Exit Confirmation */}
-          <Modal isVisible={isModalVisible} style={styles.modal}>
-            <View style={styles.modalContent}>
-              <BannerAd
-                ref={bannerRef}
-                unitId={environment.adUnitId}
-                size={BannerAdSize.BANNER}
-              />
-              <Text style={styles.modalText}>
-                Are you sure you want to exit?
-              </Text>
-              <View style={styles.modalButtons}>
-                <MyButton
-                  onPress={toggleModal}
-                  text="Cancel"
-                  backGround="green"
-                  color="white"
-                />
-                <MyButton
-                  onPress={exitApp}
-                  text="OK"
-                  backGround="red"
-                  color="white"
-                />
-              </View>
-            </View>
-          </Modal>
-        </SafeAreaView>
-      </ScrollView>
+          </View>
+        </Modal>
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 };
