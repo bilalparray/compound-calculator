@@ -25,6 +25,7 @@ const CopyableText = ({ text, textStyle, iconColor, iconSize = 18 }: any) => {
         name={isCopied ? "check" : "content-copy"}
         size={iconSize}
         color={iconColor || "black"}
+        style={styles.icon}
       />
     </TouchableOpacity>
   );
@@ -33,11 +34,14 @@ const CopyableText = ({ text, textStyle, iconColor, iconSize = 18 }: any) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
   },
   text: {
-    marginLeft: 5,
     fontSize: 18,
+    fontWeight: "bold",
+  },
+  icon: {
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

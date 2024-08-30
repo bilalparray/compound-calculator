@@ -123,7 +123,7 @@ const CompoundingCalculator = () => {
   const validateFields = () => {
     let valid = true;
     if (principalAmount === "" || isNaN(Number(principalAmount))) {
-      setNumberError("Please Enter a Valid Amount!");
+      setNumberError("Please Enter an Amount!");
       valid = false;
     }
     if (
@@ -132,11 +132,11 @@ const CompoundingCalculator = () => {
       Number(percent) < 0 ||
       Number(percent) > 100
     ) {
-      setPercentError("Please Enter a Valid Percentage!");
+      setPercentError("Please Enter a Percentage!");
       valid = false;
     }
     if (time === "" || isNaN(Number(time))) {
-      setTimeError("Please Enter a Valid Time!");
+      setTimeError("Please Enter a Time!");
       valid = false;
     }
     return valid;
@@ -220,11 +220,6 @@ const CompoundingCalculator = () => {
       <SafeAreaView style={styles.safeArea}>
         <View style={[styles.titleContainer, { height: windowHeight }]}>
           <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-            <BannerAd
-              ref={bannerRef}
-              unitId={environment.adUnitId}
-              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-            />
             <Text style={styles.title}>Compounding Calculator</Text>
             <CustomInput
               label="Enter Principal Amount"
@@ -260,7 +255,7 @@ const CompoundingCalculator = () => {
               error={timeError}
             />
             <Dropdown
-              label="Choose Time Unit"
+              label="Choose Time Period"
               selectedValue={selectedTime}
               onValueChange={handleTimeChange}
               items={timeItems}
@@ -285,6 +280,16 @@ const CompoundingCalculator = () => {
               unitId={environment.adUnitId}
               size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
             />
+            <BannerAd
+              ref={bannerRef}
+              unitId={environment.adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            />
+            <BannerAd
+              ref={bannerRef}
+              unitId={environment.adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            />
           </ScrollView>
           <StatusBar style="auto" />
         </View>
@@ -298,13 +303,13 @@ const CompoundingCalculator = () => {
           backdropComponent={renderBackdrop}
         >
           <View style={styles.contentContainer}>
-            <BannerAd
-              ref={bannerRef}
-              unitId={environment.adUnitId}
-              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-            />
             <BottomSheetScrollView>
               <Text style={styles.resultTitle}>Calculation Results</Text>
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
               <View style={styles.resultItem}>
                 <Text style={styles.resultLabel}>Principal Amount:</Text>
 
@@ -339,6 +344,21 @@ const CompoundingCalculator = () => {
                   {Number(principalAmount) + Number(result)}
                 </Text>
               </View>
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
+              <BannerAd
+                ref={bannerRef}
+                unitId={environment.adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              />
               <MyButton
                 text="Close"
                 backGround="green"
@@ -346,11 +366,6 @@ const CompoundingCalculator = () => {
                 onPress={handleClosePress}
               />
             </BottomSheetScrollView>
-            <BannerAd
-              ref={bannerRef}
-              unitId={environment.adUnitId}
-              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-            />
           </View>
         </BottomSheet>
 
@@ -455,7 +470,8 @@ const styles = StyleSheet.create({
   },
   resultItem: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
+    gap: 5,
     width: "100%",
     marginVertical: 10,
     padding: 10,
@@ -470,13 +486,13 @@ const styles = StyleSheet.create({
   resultLabel: {
     fontSize: 18,
     color: "#666",
-    flex: 3,
+    flex: 1,
   },
   resultValue: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#000",
-    flex: 2,
+    flex: 1,
     flexWrap: "wrap",
   },
 });
